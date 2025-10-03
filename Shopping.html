@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart</title>
+</head>
+<body>
+    <h2>Shopping Cart</h2>
+
+    <label>Food: </label>
+    <input type="text" id="foodInput">
+    <label>Price: </label>
+    <input type="number" id="priceInput">
+    <button onclick="addItem()">Add to Cart</button>
+    <button onclick="finishCart()">Finish</button>
+
+    <h3>Your Cart:</h3>
+    <ul id="cartList"></ul>
+    <h3 id="totalDisplay">Total: 0</h3>
+
+    <script>
+        let foods = [];
+        let prices = [];
+        let total = 0;
+
+        function addItem() {
+            const food = document.getElementById("foodInput").value;
+            const price = parseInt(document.getElementById("priceInput").value);
+
+            if(food && !isNaN(price)) {
+                foods.push(food);
+                prices.push(price);
+                document.getElementById("foodInput").value = "";
+                document.getElementById("priceInput").value = "";
+            } else {
+                alert("Enter valid food and price!");
+            }
+        }
+
+        function finishCart() {
+            const cartList = document.getElementById("cartList");
+            cartList.innerHTML = "";
+            total = 0;
+
+            for(let i=0; i<foods.length; i++){
+                const li = document.createElement("li");
+                li.textContent = foods[i] + " - $" + prices[i];
+                cartList.appendChild(li);
+                total += prices[i];
+            }
+
+            document.getElementById("totalDisplay").textContent = "Total: $" + total;
+        }
+    </script>
+</body>
+</html>
